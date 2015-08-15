@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Electron Clipboard Demo</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .btn{margin: 5px 0px;}
+    </style>
+</head>
+<body class="content">
+    <div class="row center-block">
+        <div class="col-sm-6 col-xs-6">
+            <h3>Write Some Text</h3>
+            <textarea id="textArea" class="form-control" rows="10px">
+            </textarea>
+            <button type="button" id="copyToClip"
+                    class="btn btn-block btn-primary">
+                Copy to Clipboard
+            </button>
+        </div>
+        <div class="col-sm-6 col-xs-6">
+            <h3>Clipboard Content</h3>
+            <textarea id="renderer" class="form-control" rows="10px"></textarea>
+            <button type="button" id="clipContent"
+                    class="btn btn-block btn-primary">
+                Get Clipboard Content
+            </button>
+        </div>
+    </div>
+    </body>
+    <script>
+    (function(){
+       var copyToClipButton = document.getElementById("copyToClip"),
+           clipContentButton = document.getElementById("clipContent"),
+           textArea = document.getElementById("textArea"),
+           renderer = document.getElementById("renderer");
+
+        var handleCopyToClip = function(){
+            var textContent = textArea.value,
+                clipboard = require('clipboard');
+            clipboard.writeText(textContent);
+        };
+        var handleClipContent = function(){
+            var textContent = textArea.value,
+                clipboard = require('clipboard'),
+                textContent = clipboard.readText();
+            renderer.value = textContent;
+        };
+        copyToClipButton.addEventListener("click",handleCopyToClip);
+        clipContentButton.addEventListener("click",handleClipContent);
+    })();
+</script>
+</html>
